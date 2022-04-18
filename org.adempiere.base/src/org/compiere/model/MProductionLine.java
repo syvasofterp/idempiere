@@ -108,7 +108,8 @@ public class MProductionLine extends X_M_ProductionLine {
 		
 		if (log.isLoggable(Level.FINEST))	log.log(Level.FINEST, "asi Description is: " + asiString);
 		// create transactions for finished goods
-		if ( getM_Product_ID() == getEndProduct_ID()) {
+		//if ( getM_Product_ID() == getEndProduct_ID()) {
+		if ( isEndProduct()) {
 			if (reversalId <= 0  && isAutoGenerateLot && getM_AttributeSetInstance_ID() == 0)
 			{
 				asi = MAttributeSetInstance.generateLot(getCtx(), (MProduct)getM_Product(), get_TrxName());
@@ -359,9 +360,9 @@ public class MProductionLine extends X_M_ProductionLine {
 				return false;
 			}
 			if ( productionParent.getM_Product_ID() == getM_Product_ID() && productionParent.getProductionQty().signum() == getMovementQty().signum())
-				setIsEndProduct(true);
-			else 
 				setIsEndProduct(false);
+			else 
+				setIsEndProduct(true);
 		} 
 		else 
 		{
@@ -371,10 +372,10 @@ public class MProductionLine extends X_M_ProductionLine {
 				log.saveError("ParentComplete", Msg.translate(getCtx(), "M_Production_ID"));
 				return false;
 			}
-			if (plan.getM_Product_ID() == getM_Product_ID() && plan.getProductionQty().signum() == getMovementQty().signum())
-				setIsEndProduct(true);
-			else 
-				setIsEndProduct(false);
+			//if (plan.getM_Product_ID() == getM_Product_ID() && plan.getProductionQty().signum() == getMovementQty().signum())
+				//setIsEndProduct(true);
+			//else 
+				//setIsEndProduct(false);
 		}
 		
 		if ( isEndProduct() && getM_AttributeSetInstance_ID() != 0 )
@@ -391,6 +392,15 @@ public class MProductionLine extends X_M_ProductionLine {
 			{
 				test.createResult(getM_AttributeSetInstance_ID());
 			}
+		}
+		
+		if(isEndProduct()) {
+			setMovementQty(getPlannedQty());
+			setQtyUsed(null);
+		}
+		else {
+			setQtyUsed(getPlannedQty());
+			setMovementQty(getPlannedQty());
 		}
 		
 		if ( !isEndProduct() )
