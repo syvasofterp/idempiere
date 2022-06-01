@@ -121,6 +121,7 @@ import org.zkoss.zul.Paging;
 import org.zkoss.zul.Separator;
 import org.zkoss.zul.South;
 import org.zkoss.zul.Space;
+import org.zkoss.zul.Timer;
 import org.zkoss.zul.Vbox;
 import org.zkoss.zul.Vlayout;
 
@@ -162,7 +163,9 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 	private TreeMap<Integer, List<Object[]>> parameterTree;
 	private Checkbox checkAND;
 	private boolean m_QueryDataOnLoad = false;
-		
+	private int m_AutoRefreshInterval = 0;
+	
+	private Timer timer;
 	// F3P: Keep original values: when a row is unselected, restore original values
 		
 	private boolean hasEditable = false;
@@ -237,8 +240,10 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 		super(WindowNo, tableName, keyColumn, multipleSelection, whereClause,
 				lookup, AD_InfoWindow_ID, queryValue);		
 		this.m_gridfield = field;
-		if(infoWindow != null)
+		if(infoWindow != null) {
 			this.m_QueryDataOnLoad = infoWindow.get_ValueAsBoolean("QueryDataOnLoad");
+			this.m_AutoRefreshInterval = infoWindow.get_ValueAsInt("AutoRefreshInterval");
+		}
 		
    		//Xolali IDEMPIERE-1045
    		contentPanel.addActionListener(new EventListener<Event>() {
@@ -1404,6 +1409,16 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 		southBody.appendChild(new Separator());
 		southBody.appendChild(confirmPanel);
 		southBody.appendChild(statusBar);
+		
+		if(m_AutoRefreshInterval > 0) {
+			timer = new Timer();
+			timer.setDelay(m_AutoRefreshInterval);
+			timer.addEventListener(Events.ON_TIMER, this);
+			timer.setRepeats(true);
+			timer.start();
+			timer.setVisible(false);
+			southBody.appendChild(timer);
+		}
 	}
 
 	protected void insertPagingComponent() {
