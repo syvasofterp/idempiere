@@ -161,6 +161,7 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 	private List<GridField> gridFields;
 	private TreeMap<Integer, List<Object[]>> parameterTree;
 	private Checkbox checkAND;
+	private boolean m_QueryDataOnLoad = false;
 		
 	// F3P: Keep original values: when a row is unselected, restore original values
 		
@@ -236,7 +237,9 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 		super(WindowNo, tableName, keyColumn, multipleSelection, whereClause,
 				lookup, AD_InfoWindow_ID, queryValue);		
 		this.m_gridfield = field;
-
+		if(infoWindow != null)
+			this.m_QueryDataOnLoad = infoWindow.get_ValueAsBoolean("QueryDataOnLoad");
+		
    		//Xolali IDEMPIERE-1045
    		contentPanel.addActionListener(new EventListener<Event>() {
    			public void onEvent(Event event) throws Exception {
@@ -287,7 +290,11 @@ public class InfoWindow extends InfoPanel implements ValueChangeListener, EventL
 			{
 				prepareTable();
 				processQueryValue();
-			}			
+			}	
+			
+			if(this.m_QueryDataOnLoad) {
+				onUserQuery();
+			}
 		}
 		
 		if (ClientInfo.isMobile()) {
