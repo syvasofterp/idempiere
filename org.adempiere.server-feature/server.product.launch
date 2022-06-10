@@ -217,7 +217,6 @@
         <setEntry value="org.eclipse.core.variables@default:default"/>
         <setEntry value="org.eclipse.ecf.filetransfer@default:default"/>
         <setEntry value="org.eclipse.ecf.identity@default:default"/>
-        <setEntry value="org.eclipse.ecf.provider.filetransfer.httpclient45@default:default"/>
         <setEntry value="org.eclipse.ecf.provider.filetransfer.ssl@default:false"/>
         <setEntry value="org.eclipse.ecf.provider.filetransfer@default:default"/>
         <setEntry value="org.eclipse.ecf@default:default"/>
@@ -387,6 +386,7 @@
         <setEntry value="zweb@default:default"/>
     </setAttribute>
     <setAttribute key="selected_workspace_bundles">
+        <setEntry value="kanbanBoard@default:default"/>
         <setEntry value="org.adempiere.base.callout@default:default"/>
         <setEntry value="org.adempiere.base.process@default:default"/>
         <setEntry value="org.adempiere.base@default:default"/>
@@ -413,6 +413,7 @@
         <setEntry value="org.idempiere.printformat.editor@default:default"/>
         <setEntry value="org.idempiere.webservices@default:default"/>
         <setEntry value="org.idempiere.zk.extra@default:default"/>
+        <setEntry value="org.syvasoft.exigo@5:true"/>
     </setAttribute>
     <booleanAttribute key="show_selected_only" value="false"/>
     <booleanAttribute key="tracing" value="false"/>
