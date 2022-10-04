@@ -176,9 +176,11 @@ public final class Env
 		//hengsin, avoid unncessary query of session when exit without log in
 		if (DB.isConnected(false)) {
 			//	End Session
-			MSession session = MSession.get(Env.getCtx(), false);	//	finish
-			if (session != null)
+			MSession session = MSession.get(Env.getCtx());	//	finish
+			if (session != null) {
+				session = new MSession(getCtx(), session.getAD_Session_ID(), null);
 				session.logout();
+			}
 		}
 		//
 		reset(true);	// final cache reset
@@ -195,9 +197,11 @@ public final class Env
 	public static void logout()
 	{
 		//	End Session
-		MSession session = MSession.get(Env.getCtx(), false);	//	finish
-		if (session != null)
+		MSession session = MSession.get(Env.getCtx());	//	finish
+		if (session != null) {
+			session = new MSession(getCtx(), session.getAD_Session_ID(), null);
 			session.logout();
+		}
 		//
 		reset(true);	// final cache reset
 		//
@@ -677,9 +681,6 @@ public final class Env
 		if (ctx == null || context == null)
 			throw new IllegalArgumentException ("Require Context");
 		String s = ctx.getProperty(WindowNo+"|"+TabNo+"|"+context);
-		// If TAB_INFO, don't check Window and Global context - teo_sarca BF [ 2017987 ]
-		if (TAB_INFO == TabNo)
-			return s != null ? s : "";
 		//
 		if (Util.isEmpty(s) && ! onlyTab)
 			return getContext(ctx, WindowNo, context, onlyWindow);

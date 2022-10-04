@@ -52,7 +52,7 @@ public class ProcessInfo implements Serializable
 	 * 
 	 */
 	private static final long serialVersionUID = -4648764346588157872L;
-
+	
 	private static final CLogger logger = CLogger.getCLogger(ProcessInfo.class);
 
 	/**
@@ -912,7 +912,7 @@ public class ProcessInfo implements Serializable
 	}
 	
 	private Timestamp getLastServerRebootDate() {
-		MSession currentSession = MSession.get(Env.getCtx(), false);
+		MSession currentSession = MSession.get(Env.getCtx());
 		if (currentSession == null)
 			return null;
 		
