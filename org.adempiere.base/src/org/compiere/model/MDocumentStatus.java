@@ -144,6 +144,7 @@ public class MDocumentStatus extends X_PA_DocumentStatus implements ImmutablePOS
 		/* Verify access for user/role */
 		List<MDocumentStatus> listWithAccess = new ArrayList<MDocumentStatus>();
 		for (MDocumentStatus ds : list) {
+			int AD_InfoWindow_ID = ds.get_ValueAsInt("AD_InfoWindow_ID");
 			if (ds.canAccess(ctx, AD_User_ID, AD_Role_ID, trxName)) {
 				if (ds.getAD_Window_ID() > 0) {
 					Boolean access = MRole.getDefault().getWindowAccess(ds.getAD_Window_ID());
@@ -151,6 +152,10 @@ public class MDocumentStatus extends X_PA_DocumentStatus implements ImmutablePOS
 						listWithAccess.add(ds);
 				} else if (ds.getAD_Form_ID() > 0) {
 					Boolean access = MRole.getDefault().getFormAccess(ds.getAD_Form_ID());
+					if (access != null)
+						listWithAccess.add(ds);
+				}else if (AD_InfoWindow_ID  > 0) {
+					Boolean access = MRole.getDefault().getInfoAccess(AD_InfoWindow_ID);
 					if (access != null)
 						listWithAccess.add(ds);
 				}
