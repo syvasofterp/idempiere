@@ -359,7 +359,7 @@ public class MProductionLine extends X_M_ProductionLine {
 				log.saveError("ParentComplete", Msg.translate(getCtx(), "M_Production_ID"));
 				return false;
 			}
-			if ( productionParent.getM_Product_ID() == getM_Product_ID() && productionParent.getProductionQty().signum() == getMovementQty().signum())
+			if ( productionParent.getM_Product_ID() == getM_Product_ID()) // && productionParent.getProductionQty().signum() == getMovementQty().signum())
 				setIsEndProduct(false);
 			else 
 				setIsEndProduct(true);
