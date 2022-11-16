@@ -647,7 +647,7 @@ public class MInOut extends X_M_InOut implements DocAction, IDocsPostProcess
 			set_TrxName(m_lines, get_TrxName());
 			return m_lines;
 		}
-		List<MInOutLine> list = new Query(getCtx(), I_M_InOutLine.Table_Name, "M_InOut_ID=?", get_TrxName())
+		List<MInOutLine> list = new Query(getCtx(), I_M_InOutLine.Table_Name, "M_InOut_ID=? AND IsActive='Y'", get_TrxName())
 		.setParameters(getM_InOut_ID())
 		.setOrderBy(MInOutLine.COLUMNNAME_Line+","+MInOutLine.COLUMNNAME_M_InOutLine_ID)
 		.list();
@@ -1354,7 +1354,7 @@ public class MInOut extends X_M_InOut implements DocAction, IDocsPostProcess
 
 		StringBuilder errors = new StringBuilder();
 		//	For all lines
-		MInOutLine[] lines = getLines(false);
+		MInOutLine[] lines = getLines(true);
 		for (int lineIndex = 0; lineIndex < lines.length; lineIndex++)
 		{
 			MInOutLine sLine = lines[lineIndex];
