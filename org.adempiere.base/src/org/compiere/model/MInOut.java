@@ -1045,14 +1045,16 @@ public class MInOut extends X_M_InOut implements DocAction, IDocsPostProcess
 		if((disallowNegInv && DELIVERYRULE_Force.equals(DeliveryRule)) ||
 				(DeliveryRule == null || DeliveryRule.length()==0))
 			setDeliveryRule(DELIVERYRULE_Availability);
-
+		
+		/*
         // Shipment/Receipt can have either Order/RMA (For Movement type)
         if (getC_Order_ID() != 0 && getM_RMA_ID() != 0)
         {
             log.saveError("OrderOrRMA", "");
             return false;
         }
-
+		*/
+		
         if (isSOTrx() && getM_RMA_ID() != 0)
         {
             // Set Document and Movement type for this Receipt

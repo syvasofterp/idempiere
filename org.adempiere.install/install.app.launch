@@ -111,6 +111,7 @@
         <setEntry value="org.apache.ecs@default:default"/>
         <setEntry value="org.compiere.db.oracle.provider@default:default"/>
         <setEntry value="org.compiere.db.postgresql.provider@default:default"/>
+        <setEntry value="org.syvasoft.sushil@5:true"/>
     </setAttribute>
     <booleanAttribute key="show_selected_only" value="false"/>
     <stringAttribute key="templateConfig" value="${target_home}/configuration/config.ini"/>
